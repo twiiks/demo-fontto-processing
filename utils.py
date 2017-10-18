@@ -1,4 +1,6 @@
-from generator.options.test_options import TestOptions
+import sys
+sys.path.append("./generator/")
+from options.test_options import TestOptions
 
 
 # this function should be called in written all
