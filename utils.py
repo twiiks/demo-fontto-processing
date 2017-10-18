@@ -1,4 +1,4 @@
-from options.test_options import TestOptions
+from generator.options.test_options import TestOptions
 
 
 # this function should be called in written all
