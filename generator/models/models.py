@@ -1,5 +1,5 @@
 
-def create_model(opt):
+def create_model(opt, path_pth):
     model = None
     print(opt.model)
     if opt.model == 'cycle_gan':
@@ -16,6 +16,5 @@ def create_model(opt):
         model = TestModel()
     else:
         raise ValueError("Model [%s] not recognized." % opt.model)
-    model.initialize(opt)
-    print("model [%s] was created" % (model.name()))
+    model.initialize(opt, path_pth)
     return model

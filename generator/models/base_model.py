@@ -3,6 +3,7 @@ import torch
 
 
 class BaseModel():
+
     def name(self):
         return 'BaseModel'
 
@@ -51,6 +52,11 @@ class BaseModel():
         save_filename = '%s_net_%s.pth' % (epoch_label, network_label)
         save_path = os.path.join(self.save_dir, save_filename)
         network.load_state_dict(torch.load(save_path))
+
+    def load_network_GB(self, network, path_pth):
+        network.load_state_dict(torch.load(path_pth))
+     
+
     # update learning rate (called once every epoch)
     def update_learning_rate(self):
         for scheduler in self.schedulers:
