@@ -17,6 +17,6 @@ def generator(image_input_tensor, opt, path_pth):
     model.test()
     # change to pil typed image
     fake_B = util.tensor2im(model.fake_B.data)
-    image_generated = Image.fromarray(fake_B, 'RGB')
+    image_generated_pil = Image.fromarray(fake_B, 'RGB')
 
     return image_generated_pil
