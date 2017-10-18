@@ -13,13 +13,13 @@ process -> fontto_pix2pix -> (written2all -> one2classes -> generator), (store2S
 2. 프로세스
     - generator()
         - pix2pix를 활용해 하나의 이미지로 하나의 결과 생성
-        - 입력 : image (입력이미지), path_pth
-        - 출력 : image (생성이미지)
+        - 입력 : image (입력이미지 pytorch tensor float 타입), path_pth
+        - 출력 : image (생성이미지 PIL 타입)
         - EXAMPlE
             - 붐 -> 폰
-    - one2classes()
+    - one2class()
         - 하나의 unicode, image쌍을 입력받아 해당 unicode로 만들 수 있는 모든 글자를 generator 함수를 이용해 생성
-        - 입력 : unicode, image, path_pth
+        - 입력 : unicode, image
         - 출력 : {'unicode' : image}
         - EXAMPlE
             - 붐 -> 폰, 톤, 풀, 틀 ...
