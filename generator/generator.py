@@ -1,33 +1,22 @@
-import time
-import os
-from options.test_options import TestOptions
-from data.data_loader import CreateDataLoader
 from models.models import create_model
-from util.visualizer import Visualizer
-from util import html
+import util.util as util
+from PIL import Image
 
-opt = TestOptions().parse()
-opt.nThreads = 1   # test code only supports nThreads = 1
-opt.batchSize = 1  # test code only supports batchSize = 1
-opt.serial_batches = True  # no shuffle
-opt.no_flip = True  # no flip
+# image_input_tensor should be tensor float
+# one2class should call
+#  image_input_tensor = to_tensor(image_input)
+#  image_input_tensor = image_input_tensor.unsqueeze(0)
+# return image is typed with PIL
 
-data_loader = CreateDataLoader(opt)
-dataset = data_loader.load_data()
-model = create_model(opt)
-visualizer = Visualizer(opt)
-# create website
-web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.which_epoch))
-webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.which_epoch))
-# test
-for i, data in enumerate(dataset):
-    if i >= opt.how_many:
-        break
-    model.set_input(data)
+
+def generator(image_input_tensor, opt, path_pth):
+    # load model from path_pth
+    model = create_model(opt, path_pth)
+    model.set_input_GB(image_input_tensor)
+    # test model
     model.test()
-    visuals = model.get_current_visuals()
-    img_path = model.get_image_paths()
-    print('process image... %s' % img_path)
-    visualizer.save_images(webpage, visuals, img_path)
+    # change to pil typed image
+    fake_B = util.tensor2im(model.fake_B.data)
+    image_generated = Image.fromarray(fake_B, 'RGB')
 
-webpage.save()
+    return image_generated_pil
