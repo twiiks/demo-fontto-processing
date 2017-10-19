@@ -3,7 +3,7 @@ sys.path.append("./generator/")
 from options.test_options import TestOptions
 import urllib
 import BytesIO
-from PIL import Image
+from PIL import Image, ImageChops
 
 
 # this function should be called in written all
@@ -30,3 +30,33 @@ def url2img(url):
     #    imgFromS3.show()
 
     return imgFromS3
+
+
+def scale(image, max_size, method=Image.ANTIALIAS):
+    im_aspect = float(image.size[0]) / float(image.size[1])
+    out_aspect = float(max_size[0]) / float(max_size[1])
+    if im_aspect >= out_aspect:
+        scaled = image.resize(
+            (max_size[0], int((float(max_size[0]) / im_aspect) + 0.5)), method)
+    else:
+        scaled = image.resize((int((float(max_size[1]) * im_aspect) + 0.5),
+                               max_size[1]), method)
+
+    offset = (int((max_size[0] - scaled.size[0]) / 2), int(
+        (max_size[1] - scaled.size[1]) / 2))
+    # print(offset)
+    back = Image.new("RGB", max_size, "white")
+    back.paste(scaled, offset)
+    return back
+
+
+# trim from PIL image
+def trim_resize_PIL(image_input, width, height):
+    bg = Image.new(image_input.mode, image_input.size,
+                   image_input.getpixel((0, 0)))
+    diff = ImageChops.difference(image_input, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    image_output = image_input.crop(bbox)
+    image_output = scale(image_output, [width, height])
+    return image_output
