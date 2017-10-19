@@ -24,7 +24,7 @@ process -> fontto_pix2pix -> (written2all -> one2classes -> generator), (store2S
         - EXAMPlE
             - 붐 -> 폰, 톤, 풀, 틀 ...
     - written2all()
-        - unicode, url쌍들을 입력받아 하나씩 one2classes 함수를 이용해 생성
+        - unicode, image쌍들을 입력받아 하나씩 one2classes 함수를 이용해 생성
         - 입력 : {'unicode' : image}
         - 출력 : {'unicode' : image}
         - nxEXAMPlE
