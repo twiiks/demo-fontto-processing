@@ -55,7 +55,6 @@ def to_tensor(pic):
         nchannel = 1
     else:
         nchannel = len(pic.mode)
-        print("nchannel : " + str(nchannel))
     img = img.view(pic.size[1], pic.size[0], nchannel)
     # put it from HWC to CHW format
     # yikes, this transpose takes 80% of the loading time/CPU

@@ -16,7 +16,7 @@ def deal_opt():
     return opt
 
 
-def urls2imgs(url):
+def url2img(url):
     """
     - fontto_pix2pix에서 사용할 수 있도록 url을 통해 이미지를 로드하고 PIL Image로 변환하여 반환
     - 입력 : url
@@ -27,6 +27,6 @@ def urls2imgs(url):
     bytesFromS3 = BytesIO(url)
     #bytes -> image
     imgFromS3 = Image.open(bytesFromS3)
-#    imgFromS3.show()
+    #    imgFromS3.show()
 
     return imgFromS3
