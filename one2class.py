@@ -10,7 +10,7 @@ import os
 def one2class(unicode_input, image_input, opt):
     path_class = "./pths/%s/" % (unicode_input)
     if not os.path.isdir(path_class):
-        return -1
+        return {}
 
     images_output = {}
 
