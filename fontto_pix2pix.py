@@ -28,4 +28,4 @@ def fontto_pix2pix(input_unicode_url, count, env):
         output_url = store2S3(output_unicode, output_image, count, env)
         output_unicode_url[output_unicode] = output_url
 
-    return output_unicode_url
+    return output_unicode_url 
