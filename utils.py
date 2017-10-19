@@ -2,8 +2,13 @@ import sys
 sys.path.append("./generator/")
 from options.test_options import TestOptions
 import urllib
-import BytesIO
+from io import BytesIO
 from PIL import Image
+import base64
+import time
+from time import strftime
+from time import gmtime
+import boto3
 
 
 # this function should be called in written all
@@ -30,3 +35,17 @@ def url2img(url):
     #    imgFromS3.show()
 
     return imgFromS3
+
+
+def store2S3(uni, image_PIL, count, env):
+    # PIL to base64 buffer 
+    buffer = BytesIO()
+    image_PIL.save(buffer, format='JPEG')
+    image_base64 = base64.b64encode(buffer.getvalue())
+    
+    # buffer to s3
+    time_gm = time.gmtime(time.time())
+    time_stemp = strftime("%y-%m-%d-%H-%M-%S-000", time_gm) #returns 17-10-19-15-18-000
+    s3 = boto3.resource('s3')
+    s3.Bucket('fontto'). \
+            put_object(Key='%s/handwrites/fontto@twiiks.co/%s/%s_%s' %(env, count, time_stemp, "'가'"), Body=base64.b64decode(image_base64), ContentType='image/jpeg', ACL='public_read')
