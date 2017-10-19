@@ -27,6 +27,8 @@ def one2class(unicode_input, image_input, opt):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.pth':
                     unicode_output = dir.split('_')[1].split('.')[-1]
+                    # log
+                    print("now dealing with :", unicode_output)
                     path_pth = os.path.abspath("%s/%s/%s" % (path_class, dir,
                                                              filename))
                     image_gen = generator(image_input_tensor, opt, path_pth)
