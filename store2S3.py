@@ -1,4 +1,4 @@
-import BytesIO
+from io import BytesIO
 import boto3
 import time
 from time import strftime
@@ -10,7 +10,7 @@ from tornado.wsgi import WSGIContainer
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
-#app = Flask(__name__)
+app = Flask(__name__)
 
 """
 1. s3로 올리는 것
@@ -37,16 +37,22 @@ def backgroundProcessing(request):
     env = body['env']
     url_class = fontto2pix2pix(input_urls, count, env)
 
-
     return url_class
 
-#
-#@app.route('/
-#    
-#
-#if __name__ == '__main__':
-#    http_server = HTTPServer(WSGIContainer(app))
-#    http_server.listen(5959)
-#    IOLoop.instance().start()
-#    # app.run(port=5959, debug=True)
-#   
+
+@app.route('/fontto/processing', methods=['POST'])
+def processing_fontto():
+    return json.dumps(backgroundProcessing(request))
+    
+    
+@app.route('/connection-test')
+def test_root():
+    return 'OK'
+
+
+if __name__ == '__main__':
+    http_server = HTTPServer(WSGIContainer(app))
+    http_server.listen(5959)
+    IOLoop.instance().start()
+    # app.run(port=5959, debug=True)
+   
