@@ -1,4 +1,4 @@
-from utils import deal_opt, url2img, store2S3
+from utils import deal_opt, url2img, store2S3, trim_resize_PIL
 from written2all import written2all
 
 
@@ -12,10 +12,11 @@ def fontto_pix2pix(input_unicode_url, count, env):
      - output_unicode_url = {unicode : url}
     '''
 
-    # change urls to images
+    # change urls to images and then trim
     input_unicode_image = {}
     for input_unicode, input_url in input_unicode_url.items():
         input_image = url2img(input_url)
+        input_image = trim_resize_PIL(input_image, 256, 256)
         input_unicode_image[input_unicode] = input_image
 
     # generate images
