@@ -75,12 +75,14 @@ def store2S3(uni, image_PIL, count, env):
 
     # buffer to s3
     time_gm = time.gmtime(time.time())
-    time_stemp = strftime("%y-%m-%d-%H-%M-%S-000",
-                          time_gm)  # returns 17-10-19-15-18-000
+    time_stemp = strftime("%y-%m-%d-%H-%M-%S-000", time_gm)  # returns 17-10-19-15-18-000
+    s3Key = '%s/results/fontto@twiiks.co/%s/%s_%s' % (env, count, time_stemp, chr(int(uni, 16)))
     s3 = boto3.resource('s3')
+
     s3.Bucket('fontto'). \
-        put_object(Key='%s/results/fontto@twiiks.co/%s/%s_%s' %
-                       (env, count, time_stemp, chr(int(uni, 16))),
+        put_object(Key=s3Key,
                    Body=base64.b64decode(image_base64),
                    ContentType='image/jpeg',
-                   ACL='public_read')
+                   ACL='public-read')
+
+    return 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3Key
