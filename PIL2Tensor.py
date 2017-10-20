@@ -1,17 +1,11 @@
 from __future__ import division
 import torch
-import math
-import random
-from PIL import Image, ImageOps, ImageEnhance
+from PIL import Image
 try:
     import accimage
 except ImportError:
     accimage = None
 import numpy as np
-import numbers
-import types
-import collections
-import warnings
 
 def _is_pil_image(img):
     if accimage is not None:
@@ -27,7 +21,7 @@ def to_tensor(pic):
     Returns:
         Tensor: Converted image.
     """
-    if not(_is_pil_image(pic) or _is_numpy_image(pic)):
+    if not(_is_pil_image(pic)):
         raise TypeError('pic should be PIL Image or ndarray. Got {}'.format(type(pic)))
 
     if isinstance(pic, np.ndarray):

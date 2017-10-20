@@ -27,7 +27,6 @@ def diagnose_network(net, name='network'):
     if count > 0:
         mean = mean / count
     print(name)
-    print(mean)
 
 
 def save_image(image_numpy, image_path):

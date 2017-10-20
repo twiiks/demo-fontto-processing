@@ -13,6 +13,7 @@ def backgroundProcessing(request):
     input_urls = body['urls']
     count = body['count']
     env = body['env']
+
     url_class = fontto_pix2pix(input_urls, count, env)
 
     return url_class
@@ -23,7 +24,7 @@ def processing_fontto():
     return json.dumps(backgroundProcessing(request))
     
     
-@app.route('/connection-test')
+@app.route('/')
 def test_root():
     return 'OK'
 

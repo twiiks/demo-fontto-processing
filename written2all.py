@@ -3,7 +3,6 @@ import sys
 sys.path.append("./generator/")
 
 import os
-from PIL import Image
 from generator import generator
 from PIL2Tensor import to_tensor
 

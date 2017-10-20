@@ -1,14 +1,13 @@
 import sys
+
 sys.path.append("./generator/")
 from options.test_options import TestOptions
 import urllib
-import BytesIO
 from PIL import Image, ImageChops
 from io import BytesIO
 import base64
 import time
 from time import strftime
-from time import gmtime
 import boto3
 
 
@@ -28,10 +27,10 @@ def url2img(url):
     - 입력 : url
     - 반환 : image
     """
-    #url -> bytes
+    # url -> bytes
     url = urllib.request.urlopen(url).read()
     bytesFromS3 = BytesIO(url)
-    #bytes -> image
+    # bytes -> image
     imgFromS3 = Image.open(bytesFromS3)
     #    imgFromS3.show()
 
@@ -77,7 +76,11 @@ def store2S3(uni, image_PIL, count, env):
     # buffer to s3
     time_gm = time.gmtime(time.time())
     time_stemp = strftime("%y-%m-%d-%H-%M-%S-000",
-                          time_gm)  #returns 17-10-19-15-18-000
+                          time_gm)  # returns 17-10-19-15-18-000
     s3 = boto3.resource('s3')
     s3.Bucket('fontto'). \
-            put_object(Key='%s/handwrites/fontto@twiiks.co/%s/%s_%s' %(env, count, time_stemp, "'가'"), Body=base64.b64decode(image_base64), ContentType='image/jpeg', ACL='public_read')
+        put_object(Key='%s/results/fontto@twiiks.co/%s/%s_%s' %
+                       (env, count, time_stemp, chr(int(uni, 16))),
+                   Body=base64.b64decode(image_base64),
+                   ContentType='image/jpeg',
+                   ACL='public_read')
