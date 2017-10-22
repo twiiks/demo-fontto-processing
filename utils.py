@@ -37,36 +37,6 @@ def url2img(url):
     return imgFromS3
 
 
-def scale(image, max_size, method=Image.ANTIALIAS):
-    im_aspect = float(image.size[0]) / float(image.size[1])
-    out_aspect = float(max_size[0]) / float(max_size[1])
-    if im_aspect >= out_aspect:
-        scaled = image.resize(
-            (max_size[0], int((float(max_size[0]) / im_aspect) + 0.5)), method)
-    else:
-        scaled = image.resize((int((float(max_size[1]) * im_aspect) + 0.5),
-                               max_size[1]), method)
-
-    offset = (int((max_size[0] - scaled.size[0]) / 2), int(
-        (max_size[1] - scaled.size[1]) / 2))
-    # print(offset)
-    back = Image.new("RGB", max_size, "white")
-    back.paste(scaled, offset)
-    return back
-
-
-# trim from PIL image
-def trim_resize_PIL(image_input, width, height):
-    bg = Image.new(image_input.mode, image_input.size,
-                   image_input.getpixel((0, 0)))
-    diff = ImageChops.difference(image_input, bg)
-    diff = ImageChops.add(diff, diff, 2.0, -100)
-    bbox = diff.getbbox()
-    image_output = image_input.crop(bbox)
-    image_output = scale(image_output, [width, height])
-    return image_output
-
-
 def store2S3(uni, image_PIL, count, env):
     # PIL to base64 buffer
     buffer = BytesIO()
@@ -75,8 +45,10 @@ def store2S3(uni, image_PIL, count, env):
 
     # buffer to s3
     time_gm = time.gmtime(time.time())
-    time_stemp = strftime("%y-%m-%d-%H-%M-%S-000", time_gm)  # returns 17-10-19-15-18-000
-    s3Key = '%s/results/fontto@twiiks.co/%s/%s_%s' % (env, count, time_stemp, chr(int(uni, 16)))
+    time_stemp = strftime("%y-%m-%d-%H-%M-%S-000",
+                          time_gm)  # returns 17-10-19-15-18-000
+    s3Key = '%s/results/fontto@twiiks.co/%s/%s_%s' % (env, count, time_stemp,
+                                                      chr(int(uni, 16)))
     s3 = boto3.resource('s3')
 
     s3.Bucket('fontto'). \
