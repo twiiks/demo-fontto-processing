@@ -15,7 +15,8 @@ def backgroundProcessing(request):
     input_urls = body['urls']
     count = body['count']
     env = body['env']
-    url_class = fontto_pix2pix(input_urls, count, env)
+    reuse_unicode = body['reuse_unicode']
+    url_class = fontto_pix2pix(input_urls, count, env, reuse_unicode)
     # print log
     print("finish : backgroundProcessing")
     return url_class
