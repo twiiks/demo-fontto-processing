@@ -44,3 +44,4 @@ process -> fontto_pix2pix -> (written2all -> one2classes -> generator), (store2S
         - 입력 : url
         - 반환 : image
 
+- deploy test
