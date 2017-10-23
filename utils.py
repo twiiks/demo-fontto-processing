@@ -61,5 +61,7 @@ def store2S3(uni, image_PIL, count, env):
                    Body=base64.b64decode(image_base64),
                    ContentType='image/jpeg',
                    ACL='public-read')
-
-    return 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3Key
+    full_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3Key
+    # print log
+    print("stored : [%s]" % full_address)
+    return full_address

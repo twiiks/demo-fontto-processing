@@ -31,9 +31,10 @@ def one2class(unicode_input, image_input, opt):
                 if ext == '.pth':
                     unicode_output = dir.split('_')[1].split('.')[-1]
                     # log
-                    print("now dealing with :", unicode_output)
+                    print("  start :[", unicode_output,"]")
                     path_pth = os.path.abspath("%s/%s/%s" % (path_class, dir,
                                                              filename))
+                    print("  done! :[", unicode_output,"]")
                     image_gen = generator(image_input_tensor, opt, path_pth)
                     images_output[unicode_output] = image_gen
                     break
@@ -47,7 +48,8 @@ def written2all(unicode_image):
 
     for unicode_input, image_input in unicode_image.items():
         # print log
-        print('written2all : now dealing unicode [%s]' % unicode_input)
+        print('class [%s]' % unicode_input)
         img_gen = one2class(unicode_input, image_input, opt)
+        print('done! [%s]' % unicode_input)
         image_output.update(img_gen)
     return image_output

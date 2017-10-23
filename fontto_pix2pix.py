@@ -12,6 +12,8 @@ def fontto_pix2pix(input_unicode_url, count, env):
     - output
      - output_unicode_url = {unicode : url}
     '''
+    # print log
+    print("start : fontto_pix2pix.py")
 
     # change urls to images and then trim
     input_unicode_image = {}
@@ -20,8 +22,11 @@ def fontto_pix2pix(input_unicode_url, count, env):
         input_image = trim_resize_PIL(input_image, 216, 216, 20)
         input_unicode_image[input_unicode] = input_image
 
+    # print log
+    print("------------------------generating start------------------------")
     # generate images
     output_unicode_image = written2all(input_unicode_image)
+    print("------------------------generating done!------------------------")
 
     # store generated images to S3
     output_unicode_url = {}
@@ -29,4 +34,6 @@ def fontto_pix2pix(input_unicode_url, count, env):
         output_url = store2S3(output_unicode, output_image, count, env)
         output_unicode_url[output_unicode] = output_url
 
+    # print log
+    print("finish : fontto_pix2pix.py")
     return output_unicode_url

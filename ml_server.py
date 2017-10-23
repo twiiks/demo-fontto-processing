@@ -9,13 +9,15 @@ from tornado.ioloop import IOLoop
 app = Flask(__name__)
 
 def backgroundProcessing(request):
+    # print log
+    print("start : backgroundProcessing")
     body = request.json
     input_urls = body['urls']
     count = body['count']
     env = body['env']
-
     url_class = fontto_pix2pix(input_urls, count, env)
-
+    # print log
+    print("finish : backgroundProcessing")
     return url_class
 
 
