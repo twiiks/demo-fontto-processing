@@ -16,11 +16,17 @@ def fontto_pix2pix(input_unicode_url, count, env):
     print("start : fontto_pix2pix.py")
 
     # change urls to images and then trim
+    # print log
+    print("------------------------url2img start------------------------")    
     input_unicode_image = {}
     for input_unicode, input_url in input_unicode_url.items():
         input_image = url2img(input_url)
+        # print log
+        print("converted : [%s]" % (input_unicode))
         input_image = trim_resize_PIL(input_image, 216, 216, 20)
         input_unicode_image[input_unicode] = input_image
+    # print log
+    print("------------------------url2img done!------------------------")    
 
     # print log
     print("------------------------generating start------------------------")

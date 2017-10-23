@@ -44,6 +44,7 @@ def url2img(url):
 
 def store2S3(uni, image_PIL, count, env):
     # PIL to base64 buffer
+    print("store request : [%s]" % uni)
     buffer = BytesIO()
     image_PIL.save(buffer, format='JPEG')
     image_base64 = base64.b64encode(buffer.getvalue())
@@ -63,5 +64,5 @@ def store2S3(uni, image_PIL, count, env):
                    ACL='public-read')
     full_address = 'https://s3.ap-northeast-2.amazonaws.com/fontto/' + s3Key
     # print log
-    print("stored : [%s]" % full_address)
+    print("store done! : [%s][%s]" % (uni, full_address))
     return full_address
