@@ -10,6 +10,7 @@ import time
 from time import strftime
 import boto3
 
+import urllib.parse
 
 # this function should be called in written all
 def deal_opt():
@@ -28,6 +29,10 @@ def url2img(url):
     - 반환 : image
     """
     # url -> bytes
+    url = urllib.parse.urlsplit(url)
+    url = list(url)
+    url[2] = urllib.parse.quote(url[2])
+    url = urllib.parse.urlunsplit(url)
     url = urllib.request.urlopen(url).read()
     bytesFromS3 = BytesIO(url)
     # bytes -> image
