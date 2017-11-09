@@ -1,9 +1,6 @@
 #one2class
-import sys
-sys.path.append("./generator/")
-
 import os
-from generator import generator
+from generator.generator import generator
 from PIL2Tensor import pil2tensor
 
 #written2all
@@ -31,10 +28,10 @@ def one2class(unicode_input, image_input, opt):
                 if ext == '.pth':
                     unicode_output = dir.split('_')[1].split('.')[-1]
                     # log
-                    print("  start :[", unicode_output,"]")
+                    print("  start :[", unicode_output, "]")
                     path_pth = os.path.abspath("%s/%s/%s" % (path_class, dir,
                                                              filename))
-                    print("  done! :[", unicode_output,"]")
+                    print("  done! :[", unicode_output, "]")
                     image_gen = generator(image_input_tensor, opt, path_pth)
                     images_output[unicode_output] = image_gen
                     break
