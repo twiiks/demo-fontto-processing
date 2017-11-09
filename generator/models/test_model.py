@@ -1,6 +1,6 @@
 from torch.autograd import Variable
 from collections import OrderedDict
-import util.util as util
+import generator.util.util as util
 from .base_model import BaseModel
 from . import networks
 
@@ -31,7 +31,7 @@ class TestModel(BaseModel):
     def set_input_GB(self, input):
         input_A = input
         self.input_A.resize_(input_A.size()).copy_(input_A)
-        
+
 
     def test(self):
         self.real_A = Variable(self.input_A)

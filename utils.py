@@ -1,7 +1,5 @@
-import sys
+from generator.options.test_options import TestOptions
 
-sys.path.append("./generator/")
-from options.test_options import TestOptions
 import urllib
 from PIL import Image, ImageChops
 from io import BytesIO

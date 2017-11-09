@@ -1,5 +1,5 @@
-from models.models import create_model
-import util.util as util
+from generator.models.models import create_model
+import generator.util.util as util
 from PIL import Image
 
 # image_input_tensor should be tensor float
