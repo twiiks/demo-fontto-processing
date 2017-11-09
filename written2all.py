@@ -4,7 +4,7 @@ sys.path.append("./generator/")
 
 import os
 from generator import generator
-from PIL2Tensor import to_tensor
+from PIL2Tensor import pil2tensor
 
 #written2all
 from utils import deal_opt
@@ -18,7 +18,7 @@ def one2class(unicode_input, image_input, opt):
     images_output = {}
 
     # change image type to tensor float
-    image_input_tensor = to_tensor(image_input)
+    image_input_tensor = pil2tensor(image_input)
     image_input_tensor = image_input_tensor.unsqueeze(0)
 
     # if pth exist, generate another character using pth

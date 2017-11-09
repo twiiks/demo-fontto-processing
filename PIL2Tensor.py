@@ -12,7 +12,7 @@ def get_transform():
     return transforms.Compose(transform_list)
 
 
-def to_tensor(input_image):
+def pil2tensor(input_image):
     transform = get_transform()
     output_tensor = transform(input_image)
     return output_tensor
